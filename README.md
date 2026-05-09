@@ -1,39 +1,47 @@
 Sistema de Gestión de Recursos Humanos (SistemaRRHH)
-Este es un sistema integral para la gestión de talento humano, control de nóminas y generación de prestaciones laborales. El proyecto fue desarrollado bajo una arquitectura robusta y segura, pensado para servir como base escalable para aplicaciones empresariales.
 
-🚀 Características Principales
-Módulo de Seguridad: Autenticación basada en cookies con soporte para múltiples roles (Administrador, RRHH, Colaborador).
+Este sistema integral, es un proyecto universitario, para la gestión de talento humano, control de nóminas y generación de prestaciones laborales. El proyecto fue desarrollado bajo una arquitectura robusta y segura, pensado para servir como base escalable.
 
-Gestión de Personal: Altas, bajas y reactivación de colaboradores con control de historial.
+/*****************************************************************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
-Motor Financiero: Cálculo automatizado de nóminas mensuales y prestaciones (Bono 14, Aguinaldo, Indemnización).
+*Características Principales
+**Módulo de Seguridad: Autenticación basada en cookies con soporte para múltiples roles (Administrador, RRHH, Colaborador).
 
-Portal del Colaborador: Dashboard personal con indicadores de antigüedad y descarga de boletas de pago en PDF.
+**Gestión de Personal: Altas, bajas y reactivación de colaboradores con control de historial.
 
-Seguridad: Implementación de variables de entorno y Secretos de Usuario para proteger credenciales de base de datos y servicios de correo.
+**Motor Financiero: Cálculo automatizado de nóminas mensuales y prestaciones (Bono 14, Aguinaldo, Indemnización).
 
-🛠️ Tecnologías Utilizadas
-Backend: ASP.NET Core 7.0 / 8.0 (MVC)
+**Portal del Colaborador: Dashboard personal con indicadores de antigüedad y descarga de boletas de pago en PDF.
 
-Lenguaje: C#
+**Seguridad: Implementación de variables de entorno y Secretos de Usuario para proteger credenciales de base de datos y servicios de correo.
 
-Acceso a Datos: Dapper (Micro-ORM para alto rendimiento)
+/*****************************************************************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
-Base de Datos: MySQL Server 9.4
+*Tecnologías Utilizadas
+**Backend: ASP.NET Core 8.0 (MVC)
 
-Frontend: Razor Views, Bootstrap 5 y Bootstrap Icons
+**Lenguaje: C#
 
-Servicios: SMTP para notificaciones por correo electrónico
+**Acceso a Datos: Dapper (Micro-ORM para alto rendimiento)
 
-⚙️ Configuración Inicial
+**Base de Datos: MySQL Server 9.4
+
+**Frontend: Razor Views, Bootstrap 5 y Bootstrap Icons
+
+**Servicios: SMTP para notificaciones por correo electrónico
+
+/*****************************************************************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
+
+*Configuración Inicial
 Para ejecutar este proyecto en un entorno local, sigue estos pasos:
 
-Base de Datos:
-
+**Base de Datos:
 Ejecuta el script Script_SIRRHH_Final.sql incluido en la raíz para generar el esquema y los datos base.
 
-Secretos de Usuario:
-
+**Secretos de Usuario:
 Para evitar exponer credenciales, el sistema utiliza User Secrets. Configura tu cadena de conexión y las claves de correo en tu archivo secrets.json local:
 
 JSON
@@ -45,15 +53,21 @@ JSON
     "PasswordApp": "tu_clave_de_aplicacion_gmail"
   }
 }
-Compilación:
 
+**appsettings.json
+Actualiza la ConfiguracionEmail con los datos correspondientes al correo que se usará para el servicio SMTP.
+
+**Compilación:
 Abre la solución SistemaRRHH.sln en Visual Studio y restaura los paquetes NuGet.
 
-📂 Estructura del Proyecto
-/Controllers: Lógica de navegación y procesamiento de solicitudes.
+/*****************************************************************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
-/Models: Definición de objetos de negocio y ViewModels.
+*Estructura del Proyecto (MVC)
+**Controllers: Lógica de navegación y procesamiento de solicitudes.
 
-/Datos: Clase de conexión y acceso a la base de datos.
+**Models: Definición de objetos de negocio y ViewModels.
 
-/Views: Interfaz de usuario estructurada por módulos.
+**Datos: Clase de conexión y acceso a la base de datos.
+
+**Views: Interfaz de usuario estructurada por módulos.
