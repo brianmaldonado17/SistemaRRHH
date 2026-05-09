@@ -1,0 +1,26 @@
+﻿<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-shield-lock"></i> Editar Rol de Usuario</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Editar" method="post">
+                        <input type="hidden" name="IdRol" value="@Model.IdRol" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre del Rol</label>
+                            <input type="text" name="NombreRol" class="form-control" value="@Model.NombreRol" required />
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">Actualizar Rol</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

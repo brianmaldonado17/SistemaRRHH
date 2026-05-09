@@ -1,0 +1,95 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Expediente de Colaborador";
+}
+
+<div class="container mt-4">
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-folder2-open"></i> Expediente del Colaborador</h2>
+        <a asp-action="Index" class="btn btn-secondary shadow-sm">
+            <i class="bi bi-arrow-left me-1"></i> Regresar a la Lista
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-0 text-center h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <div class="display-1 text-primary mb-3">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                    <h3 class="card-title fw-bold">@Model.Nombre @Model.Apellido</h3>
+                    <div class="mb-3">
+                        <span class="badge @(Model.Estado == "Activo" ? "bg-success" : "bg-secondary") fs-6 px-3 py-2 rounded-pill">
+                            @Model.Estado
+                        </span>
+                    </div>
+                    <p class="text-muted mb-4"><strong>ID Sistema:</strong> #@Model.IdEmpleado</p>
+
+                    <div class="d-grid gap-2 px-3">
+                        <a asp-action="HistorialDesempeno" asp-route-id="@Model.IdEmpleado" class="btn btn-outline-primary">
+                            <i class="bi bi-bar-chart-line me-1"></i> Ver Notas
+                        </a>
+                        @if (Model.Estado == "Activo")
+                        {
+                            <a asp-action="RegistrarDesempeno" asp-route-id="@Model.IdEmpleado" asp-route-nombre="@Model.Nombre @Model.Apellido" class="btn btn-warning text-dark fw-bold">
+                                <i class="bi bi-star me-1"></i> Calificar Desempeño
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 mb-4">
+            <div class="card shadow border-0 h-100">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="bi bi-briefcase-fill me-2"></i> Información Laboral</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th class="text-muted w-25 border-bottom">Departamento:</th>
+                                <td class="fs-5 border-bottom">@Model.NombreDepartamento</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted border-bottom">Puesto Actual:</th>
+                                <td class="fs-5 border-bottom">@Model.NombrePuesto</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted border-bottom">Salario Base:</th>
+                                <td class="fs-5 text-success fw-bold border-bottom">Q @Model.SalarioBase.ToString("N2")</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted border-bottom">Fecha de Ingreso:</th>
+                                <td class="fs-5 border-bottom">@Model.FechaIngreso.ToShortDateString()</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted align-middle">Antigüedad:</th>
+                                <td>
+                                    @{
+                                        var anios = DateTime.Now.Year - Model.FechaIngreso.Year;
+                                        if (DateTime.Now.DayOfYear < Model.FechaIngreso.DayOfYear) anios--;
+                                    }
+                                    <span class="badge bg-info text-dark fs-6 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-clock-history me-1"></i> @anios año(s)
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿@model SistemaRRHH.Models.Empleado
+
+@{
+    ViewData["Title"] = "Registrar Empleado";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Nuevo Colaborador</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Crear" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Nombre" class="form-label">Nombre</label>
+                            <input asp-for="Nombre" class="form-control" placeholder="Escribe el nombre" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Apellido" class="form-label">Apellido</label>
+                            <input asp-for="Apellido" class="form-control" placeholder="Escribe el apellido" />
+                            <span asp-validation-for="Apellido" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FechaIngreso" class="form-label">Fecha de Ingreso</label>
+                            <input asp-for="FechaIngreso" class="form-control" type="date" />
+                            <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="IdDepartamento" class="form-label">Departamento</label>
+                            <select asp-for="IdDepartamento" class="form-select" required>
+                                <option value="">-- Seleccione un Departamento --</option>
+                                @foreach (var depto in ViewBag.Departamentos)
+                                {
+                                    <option value="@depto.IdDepartamento">@depto.NombreDepartamento</option>
+                                }
+                            </select>
+                            <span asp-validation-for="IdDepartamento" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="IdPuesto" class="form-label">Puesto</label>
+                            <select asp-for="IdPuesto" class="form-select" required>
+                                <option value="">-- Seleccione un Puesto --</option>
+                                @foreach (var puesto in ViewBag.Puestos)
+                                {
+                                    <option value="@puesto.IdPuesto">@puesto.NombrePuesto</option>
+                                }
+                            </select>
+                            <span asp-validation-for="IdPuesto" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Guardar Colaborador</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,39 @@
+# ==========================================
+# ARCHIVOS DE VISUAL STUDIO Y COMPILACIÓN
+# ==========================================
+
+# Directorio oculto de configuraciones locales de Visual Studio
+.vs/
+
+# Carpetas de compilación (¡Las más pesadas!)
+[Bb]in/
+[Oo]bj/
+
+# Archivos de usuario específicos (Rutas locales de tu máquina)
+*.user
+*.suo
+*.sln.docstates
+*.userprefs
+
+# Archivos de caché y logs
+*.log
+*.cache
+
+# ==========================================
+# SISTEMA OPERATIVO
+# ==========================================
+
+# Archivos basura de Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archivos basura de macOS (Por si trabajas en equipo con alguien de Mac)
+.DS_Store
+
+# ==========================================
+# ARCHIVOS SENSIBLES / PERSONALES
+# ==========================================
+
+# Aquí ignoramos tu archivo de notas con contraseñas que vi en la captura
+Usuarios.txt

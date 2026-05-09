@@ -1,0 +1,17 @@
+﻿@model SistemaRRHH.Models.Rol
+<div class="container mt-4">
+    <div class="card col-md-6 mx-auto shadow">
+        <div class="card-header bg-primary text-white"><h4>Nuevo Rol</h4></div>
+        <div class="card-body">
+            <form asp-action="Crear">
+                <div class="mb-3">
+                    <label asp-for="NombreRol" class="form-label"></label>
+                    <input asp-for="NombreRol" class="form-control" />
+                    <span asp-validation-for="NombreRol" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </form>
+        </div>
+    </div>
+</div>

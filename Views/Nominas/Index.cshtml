@@ -1,0 +1,115 @@
+﻿@model IEnumerable<SistemaRRHH.Models.Nomina>
+
+@{
+    ViewData["Title"] = "Historial de Nóminas";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2><i class="bi bi-cash-stack me-2"></i> Historial de Nóminas Generadas</h2>
+        <a asp-action="Generar" class="btn btn-success shadow-sm">
+            <i class="bi bi-play-circle-fill me-1"></i> Procesar Nueva Nómina
+        </a>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><strong>Aviso:</strong> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th>Tipo</th>
+                        <th>Período</th>
+                        <th class="text-end">Total Pagado</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr class="@(item.Estado == "Anulada" ? "text-muted bg-light" : "")">
+                                <td class="text-center align-middle fw-bold @(item.Estado == "Anulada" ? "text-decoration-line-through" : "")">
+                                    #@item.IdNomina
+                                </td>
+                                <td class="align-middle @(item.Estado == "Anulada" ? "text-decoration-line-through" : "")">
+                                    <span class="badge @(item.TipoNomina == "Mensual" ? "bg-primary" : "bg-info text-dark") px-2 py-1">
+                                        @item.TipoNomina
+                                    </span>
+                                </td>
+                                <td class="align-middle @(item.Estado == "Anulada" ? "text-decoration-line-through" : "")">
+                                    @item.FechaInicio.ToString("dd/MM/yyyy") al @item.FechaFin.ToString("dd/MM/yyyy")
+                                </td>
+                                <td class="align-middle text-end fw-bold @(item.Estado == "Anulada" ? "text-muted" : "text-success")">
+                                    Q @item.TotalPagado.ToString("N2")
+                                </td>
+                                <td class="text-center align-middle">
+                                    @if (item.Estado == "Pagada")
+                                    {
+                                        <span class="badge bg-success px-3 py-2 rounded-pill"><i class="bi bi-check-all me-1"></i>Pagada</span>
+                                    }
+                                    else if (item.Estado == "Anulada")
+                                    {
+                                        <span class="badge bg-secondary px-3 py-2 rounded-pill"><i class="bi bi-x-circle me-1"></i>Anulada</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark px-3 py-2 rounded-pill"><i class="bi bi-hourglass-split me-1"></i>Pendiente</span>
+                                    }
+                                </td>
+                                <td class="align-middle text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a asp-action="Detalles" asp-route-id="@item.IdNomina" class="btn btn-sm btn-dark" title="Ver Detalle">
+                                            <i class="bi bi-eye me-1"></i> Detalles
+                                        </a>
+
+                                        @if (item.Estado != "Pagada" && item.Estado != "Anulada")
+                                        {
+                                            <form asp-action="Pagar" asp-route-id="@item.IdNomina" method="post" onsubmit="return confirm('¿Confirmar el pago de esta nómina? Una vez pagada no podrá ser anulada ni modificada.');">
+                                                <button type="submit" class="btn btn-sm btn-success" title="Marcar como Pagada">
+                                                    <i class="bi bi-cash-coin me-1"></i> Pagar
+                                                </button>
+                                            </form>
+
+                                            <form asp-action="Anular" asp-route-id="@item.IdNomina" method="post" onsubmit="return confirm('¿Está seguro de anular esta nómina generada?');">
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Anular Nómina">
+                                                    <i class="bi bi-trash me-1"></i> Anular
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                <i class="bi bi-info-circle fs-4 d-block mb-2"></i>
+                                No se ha generado ninguna nómina en el sistema.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

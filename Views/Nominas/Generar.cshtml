@@ -1,0 +1,103 @@
+﻿<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-gear-fill"></i> Generar Nueva Nómina</h4>
+                </div>
+                <div class="card-body">
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger shadow-sm border-start border-4 border-danger" role="alert">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-exclamation-octagon-fill fs-4 me-3"></i>
+                                <div>
+                                    <strong>Validación de Nómina:</strong><br />
+                                    @ViewBag.Error
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <form asp-action="Generar" method="post" id="formNomina">
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Nómina</label>
+                            <select name="tipoNomina" class="form-select" required>
+                                <option value="Mensual">Mensual</option>
+                                <option value="Quincenal">Quincenal</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha Inicio</label>
+                                <input type="date" name="fechaInicio" class="form-control" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha Fin</label>
+                                <input type="date" name="fechaFin" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mt-3">
+                            <button type="submit" class="btn btn-success">
+                                Procesar Pagos
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("formNomina").addEventListener("submit", function (e) {
+            var tipo = document.querySelector("select[name='tipoNomina']").value;
+
+            // Extraemos los valores. Se agrega 'T00:00:00' para evitar que la zona horaria nos mueva el día
+            var inicioValor = document.querySelector("input[name='fechaInicio']").value;
+            var finValor = document.querySelector("input[name='fechaFin']").value;
+
+            if (!inicioValor || !finValor) return; // Si están vacíos, el HTML5 lo bloqueará
+
+            var inicio = new Date(inicioValor + 'T00:00:00');
+            var fin = new Date(finValor + 'T00:00:00');
+
+            if (fin < inicio) {
+                alert("❌ Error: La fecha de fin no puede ser anterior a la fecha de inicio.");
+                e.preventDefault();
+                return;
+            }
+
+            // Calculamos cuál es el último día exacto del mes seleccionado en "Fecha Inicio"
+            var ultimoDiaMesInicio = new Date(inicio.getFullYear(), inicio.getMonth() + 1, 0).getDate();
+
+            // REGLAS ESTRICTAS DE CALENDARIO
+            if (tipo === "Mensual") {
+                // Debe empezar el 1 y terminar el último día del mes (28, 29, 30 o 31)
+                if (inicio.getDate() !== 1 || fin.getDate() !== ultimoDiaMesInicio) {
+                    alert("❌ Error de Fechas: Para la nómina Mensual, el período debe ser exactamente desde el día 01 hasta el fin de mes (" + ultimoDiaMesInicio + ").\n\nEjemplo válido: 01/04/2026 al 30/04/2026.");
+                    e.preventDefault();
+                    return;
+                }
+            } else if (tipo === "Quincenal") {
+                // Debe ser del 1 al 15, o del 16 al fin de mes
+                var esPrimeraQuincena = (inicio.getDate() === 1 && fin.getDate() === 15);
+                var esSegundaQuincena = (inicio.getDate() === 16 && fin.getDate() === ultimoDiaMesInicio);
+
+                if (!esPrimeraQuincena && !esSegundaQuincena) {
+                    alert("❌ Error de Fechas: Para la nómina Quincenal, el período debe ser exactamente del 01 al 15, o del 16 al fin de mes (" + ultimoDiaMesInicio + ").");
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+            // Si pasó todas las validaciones estrictas del calendario, hacemos la pregunta final
+            if (!confirm('¿Estás seguro de generar la nómina ' + tipo + ' para todos los empleados activos en las fechas seleccionadas?')) {
+                e.preventDefault(); // Si el usuario cancela, detenemos el envío
+            }
+        });
+    </script>
+}

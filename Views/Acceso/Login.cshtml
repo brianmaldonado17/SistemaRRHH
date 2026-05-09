@@ -1,0 +1,70 @@
+﻿@model SistemaRRHH.Models.Usuario
+
+@{
+    Layout = null; // Quitamos el menú de navegación para esta pantalla
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sistema RRHH</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="bg-light d-flex align-items-center" style="min-height: 100vh;">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-4">
+
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header bg-dark text-white text-center py-4">
+                        <h3 class="font-weight-light my-2">Sistema RRHH</h3>
+                    </div>
+
+                    <div class="card-body p-4">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger text-center py-2" role="alert">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <form asp-controller="Acceso" asp-action="Login" method="post">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Username" class="form-control" id="inputUsername" placeholder="brian.maldonado" required />
+                                <label for="inputUsername">Nombre de Usuario</label>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="Password" class="form-control" id="inputPassword" type="password" placeholder="Contraseña" required />
+                                <label for="inputPassword">Contraseña</label>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4 mb-0">
+                                <button class="btn btn-primary btn-lg" type="submit">Ingresar</button>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <a asp-controller="Acceso" asp-action="RecuperarPassword" class="text-decoration-none small">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-footer text-center py-3 bg-white">
+                        <div class="small text-muted">Proyecto Ingeniería de Software</div>
+                        <div class="small text-muted">Universidad Mariano Gálvez de Guatemala</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "Panel de Control";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="p-5 bg-dark text-white rounded-3 shadow">
+                <h1 class="display-5 fw-bold">¡Bienvenido(a), @User.Identity?.Name!</h1>
+                <p class="col-md-8 fs-4">Sistema Integrado de Recursos Humanos y Gestión de Nómina.</p>
+                <hr class="my-4">
+                <p class="mb-0"><i class="bi bi-calendar3 me-2"></i> Hoy es @DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-GT"))</p>
+            </div>
+        </div>
+    </div>
+
+    @if (User.IsInRole("Administrador"))
+    {
+        <h4 class="text-primary mb-3"><i class="bi bi-gear-fill me-2"></i> Panel de Administración TI</h4>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-primary shadow-sm border-start border-5">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-primary mb-2"><i class="bi bi-person-badge"></i></div>
+                        <h5 class="card-title">Cuentas de Usuario</h5>
+                        <p class="card-text text-muted">Gestión de credenciales y accesos.</p>
+                        <h3 class="fw-bold">@ViewBag.TotalUsuarios Activos</h3>
+                        <a asp-controller="Usuarios" asp-action="Index" class="btn btn-outline-primary mt-2">Ir a Usuarios</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-success shadow-sm border-start border-5">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-success mb-2"><i class="bi bi-shield-lock"></i></div>
+                        <h5 class="card-title">Roles del Sistema</h5>
+                        <p class="card-text text-muted">Niveles de seguridad configurados.</p>
+                        <h3 class="fw-bold">@ViewBag.TotalRoles Activos</h3>
+                        <a asp-controller="Roles" asp-action="Index" class="btn btn-outline-success mt-2">Ir a Roles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-info shadow-sm border-start border-5">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-info mb-2"><i class="bi bi-building"></i></div>
+                        <h5 class="card-title">Estructura Base</h5>
+                        <p class="card-text text-muted">Mantenimiento de departamentos.</p>
+                        <h3 class="fw-bold">@ViewBag.TotalDeptos Activos</h3>
+                        <a asp-controller="Departamentos" asp-action="Index" class="btn btn-outline-info mt-2">Ver Catálogos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    else if (User.IsInRole("RecursosHumanos"))
+    {
+        <h4 class="text-success mb-3"><i class="bi bi-people-fill me-2"></i> Operaciones de RRHH y Planillas</h4>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-primary shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-primary mb-2"><i class="bi bi-person-lines-fill"></i></div>
+                        <h5 class="card-title">Gestión de Personal</h5>
+                        <p class="card-text text-muted">Actualmente hay <strong>@ViewBag.TotalEmpleados</strong> colaboradores activos en la empresa.</p>
+                        <a asp-controller="Empleados" asp-action="Index" class="btn btn-outline-primary mt-2">Ir a Colaboradores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-warning shadow-sm bg-light">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-warning mb-2"><i class="bi bi-cash-stack"></i></div>
+                        <h5 class="card-title">Nóminas Pendientes</h5>
+                        <h2 class="text-dark fw-bold">@ViewBag.NominasPendientes</h2>
+                        <p class="card-text text-muted">Planillas generadas que requieren pago o revisión.</p>
+                        <a asp-controller="Nominas" asp-action="Index" class="btn btn-warning text-dark mt-2">Ir a Nóminas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-danger shadow-sm bg-light">
+                    <div class="card-body text-center">
+                        <div class="display-4 text-danger mb-2"><i class="bi bi-gift-fill"></i></div>
+                        <h5 class="card-title">Prestaciones Pendientes</h5>
+                        <h2 class="text-dark fw-bold">@ViewBag.PrestacionesPendientes</h2>
+                        <p class="card-text text-muted">Cálculos de prestaciones en espera de pago.</p>
+                        <a asp-controller="Prestaciones" asp-action="Index" class="btn btn-danger mt-2">Ir a Prestaciones</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    else if (User.IsInRole("Colaborador"))
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow border-0">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center text-center text-md-start">
+                            <div class="col-md-4 text-center border-end">
+                                <i class="bi bi-person-circle display-1 text-primary"></i>
+                            </div>
+                            <div class="col-md-8 ps-md-4">
+                                <h3 class="fw-bold mb-1">@ViewBag.Perfil.Nombre @ViewBag.Perfil.Apellido</h3>
+                                <h5 class="text-muted mb-3">@ViewBag.Perfil.NombrePuesto</h5>
+                                <p class="mb-1"><i class="bi bi-building me-2 text-info"></i> Departamento: <strong>@ViewBag.Perfil.NombreDepartamento</strong></p>
+                                <p class="mb-0"><i class="bi bi-calendar-check me-2 text-success"></i> Fecha de Ingreso: <strong>@ViewBag.Perfil.FechaIngreso.ToString("dd/MM/yyyy")</strong></p>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row text-center">
+                            @{
+                                // Cálculo de Antigüedad
+                                DateTime fi = ViewBag.Perfil.FechaIngreso;
+                                int anios = DateTime.Now.Year - fi.Year;
+                                if (DateTime.Now.DayOfYear < fi.DayOfYear) anios--;
+
+                                // Cálculo de Próximo Aniversario
+                                DateTime proximoAniversario = new DateTime(DateTime.Now.Year, fi.Month, fi.Day);
+                                if (proximoAniversario < DateTime.Now.Date) proximoAniversario = proximoAniversario.AddYears(1);
+                                int diasFaltantes = (proximoAniversario - DateTime.Now.Date).Days;
+                            }
+
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                <div class="p-3 bg-light rounded h-100">
+                                    <h6 class="text-muted text-uppercase mb-1" style="font-size: 0.85rem;">Antigüedad</h6>
+                                    <h4 class="fw-bold text-primary mb-0">@anios año(s)</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                <div class="p-3 bg-light rounded h-100">
+                                    <h6 class="text-muted text-uppercase mb-1" style="font-size: 0.85rem;">Aniversario en</h6>
+                                    <h4 class="fw-bold text-success mb-0">@diasFaltantes días</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="p-3 bg-light rounded h-100">
+                                    <h6 class="text-muted text-uppercase mb-1" style="font-size: 0.85rem;">Faltas (Año)</h6>
+                                    <h4 class="fw-bold text-danger mb-0">@ViewBag.AusenciasAnio</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <a asp-controller="MiPerfil" asp-action="MisPagos" class="btn btn-primary btn-lg shadow-sm">
+                                <i class="bi bi-wallet2 me-2"></i> Ver Mis Boletas de Pago
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mt-5">
+        <div class="col-12 text-center text-muted">
+            <hr>
+            <p class="small"><i class="bi bi-mortarboard-fill me-1"></i> Universidad Mariano Gálvez de Guatemala</p>
+        </div>
+    </div>
+</div>

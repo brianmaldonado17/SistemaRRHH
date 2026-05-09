@@ -1,0 +1,57 @@
+﻿@model SistemaRRHH.Models.Ausencia
+
+@{
+    ViewData["Title"] = "Registrar Ausencia";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Registrar Nueva Ausencia</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Registrar" method="post">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Colaborador</label>
+                            <select asp-for="IdEmpleado" class="form-select" required>
+                                <option value="">-- Seleccione un empleado --</option>
+                                @foreach (var emp in ViewBag.Empleados)
+                                {
+                                    <option value="@emp.IdEmpleado">@emp.NombreCompleto</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Fecha de la Falta</label>
+                                <input type="date" asp-for="FechaAusencia" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Motivo / Descripción</label>
+                            <input type="text" asp-for="Motivo" class="form-control" placeholder="Ej: Faltó sin avisar, Suspensión médica..." required />
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" asp-for="DescuentaSalario" role="switch" id="swDescuento">
+                                <label class="form-check-label fw-bold" for="swDescuento">Descontar día en la próxima nómina</label>
+                            </div>
+                            <small class="text-muted">Desactive esta opción si fue un permiso con goce de sueldo.</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger">Guardar Registro</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

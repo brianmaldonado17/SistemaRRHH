@@ -1,0 +1,52 @@
+﻿<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-person-gear"></i> Editar Permisos de Usuario</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Editar" method="post">
+                        <input type="hidden" name="IdUsuario" value="@Model.IdUsuario" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre de Usuario (Username)</label>
+                            <input type="text" class="form-control bg-light" value="@Model.Username" readonly />
+                            <small class="text-muted">El nombre de usuario no se puede modificar.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Correo Electrónico</label>
+                            <input type="email" name="CorreoElectronico" class="form-control" value="@Model.CorreoElectronico" required />
+                            <small class="text-muted">Este correo se usa para recuperar contraseñas.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nivel de Acceso (Rol)</label>
+                            <select name="IdRol" class="form-select" required>
+                                <option value="">-- Seleccione un Rol --</option>
+                                @foreach (var rol in ViewBag.Roles)
+                                {
+                                    // Verificamos si este es el rol actual del usuario para dejarlo seleccionado por defecto
+                                    if (rol.IdRol == Model.IdRol)
+                                    {
+                                        <option value="@rol.IdRol" selected>@rol.NombreRol</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@rol.IdRol">@rol.NombreRol</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            <a asp-action="Index" class="btn btn-secondary">Regresar al Listado</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

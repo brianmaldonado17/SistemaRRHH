@@ -1,0 +1,53 @@
+﻿@model SistemaRRHH.Models.Empleado
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Editar Datos de Colaborador</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Editar" method="post">
+                        <input type="hidden" asp-for="IdEmpleado" />
+
+                        <div class="mb-3">
+                            <label asp-for="Nombre" class="form-label">Nombre</label>
+                            <input asp-for="Nombre" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Apellido" class="form-label">Apellido</label>
+                            <input asp-for="Apellido" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="IdDepartamento" class="form-label">Departamento</label>
+                            <select asp-for="IdDepartamento" class="form-select" required>
+                                @foreach (var depto in ViewBag.Departamentos)
+                                {
+                                    <option value="@depto.IdDepartamento">@depto.NombreDepartamento</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="IdPuesto" class="form-label">Puesto</label>
+                            <select asp-for="IdPuesto" class="form-select" required>
+                                @foreach (var puesto in ViewBag.Puestos)
+                                {
+                                    <option value="@puesto.IdPuesto">@puesto.NombrePuesto</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<SistemaRRHH.Models.Empleado>
+
+@{
+    ViewData["Title"] = "Gestión de Empleados";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2><i class="bi bi-people"></i> Listado de Empleados</h2>
+        <a asp-action="Crear" class="btn btn-primary shadow-sm">
+            <i class="bi bi-person-plus me-1"></i> Registrar Nuevo
+        </a>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><strong>Error:</strong> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Departamento</th>
+                        <th>Puesto</th>
+                        <th class="text-center">Ingreso</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr class="@(item.Estado == "Inactivo" ? "text-muted bg-light" : "")">
+                                <td class="align-middle fw-bold @(item.Estado == "Inactivo" ? "text-decoration-line-through" : "")">@item.Nombre</td>
+                                <td class="align-middle @(item.Estado == "Inactivo" ? "text-decoration-line-through" : "")">@item.Apellido</td>
+                                <td class="align-middle">@item.NombreDepartamento</td>
+                                <td class="align-middle">@item.NombrePuesto</td>
+                                <td class="text-center align-middle">@item.FechaIngreso.ToShortDateString()</td>
+                                <td class="text-center align-middle">
+                                    <span class="badge @(item.Estado == "Activo" ? "bg-success" : "bg-secondary") px-3 py-2 rounded-pill">
+                                        @item.Estado
+                                    </span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a asp-action="Detalles" asp-route-id="@item.IdEmpleado" class="btn btn-sm btn-dark" title="Ver Expediente">
+                                            <i class="bi bi-person-vcard me-1"></i> Detalles
+                                        </a>
+
+                                        @if (item.Estado == "Activo")
+                                        {
+                                            <a asp-action="Editar" asp-route-id="@item.IdEmpleado" class="btn btn-sm btn-primary" title="Editar Información">
+                                                <i class="bi bi-pencil-square me-1"></i> Editar
+                                            </a>
+                                            <a asp-action="Baja" asp-route-id="@item.IdEmpleado" class="btn btn-sm btn-danger" title="Dar de Baja">
+                                                <i class="bi bi-person-x me-1"></i> Baja
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <form asp-action="Activar" asp-route-id="@item.IdEmpleado" method="post" onsubmit="return confirm('¿Recontratar a este colaborador? Su fecha de ingreso se actualizará a hoy.');">
+                                                <button type="submit" class="btn btn-sm btn-success" title="Recontratar">
+                                                    <i class="bi bi-arrow-clockwise me-1"></i> Reactivar
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-muted">No hay empleados registrados.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

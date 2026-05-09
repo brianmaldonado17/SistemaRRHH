@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Evaluación de Desempeño";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-graph-up-arrow me-2"></i> Calificar Desempeño Mensual</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        Evaluando al colaborador: <strong>@ViewBag.NombreCompleto</strong>
+                    </div>
+
+                    <form asp-action="RegistrarDesempeno" method="post">
+                        <input type="hidden" name="IdEmpleado" value="@ViewBag.IdEmpleado" />
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Mes a Evaluar</label>
+                                <input type="month" name="MesAnio" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="mb-4">
+                            <label class="form-label d-flex justify-content-between">
+                                <span><strong>Puntualidad (30%)</strong></span>
+                                <span id="valPuntualidad" class="badge bg-primary fs-6">100 / 100</span>
+                            </label>
+                            <input type="range" class="form-range" name="Puntualidad" id="rngPuntualidad" min="0" max="100" value="100" oninput="calcularTotal()">
+                            <small class="text-muted">Asistencia a tiempo, cumplimiento de horarios.</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label d-flex justify-content-between">
+                                <span><strong>Calidad de Trabajo (40%)</strong></span>
+                                <span id="valCalidad" class="badge bg-primary fs-6">100 / 100</span>
+                            </label>
+                            <input type="range" class="form-range" name="CalidadTrabajo" id="rngCalidad" min="0" max="100" value="100" oninput="calcularTotal()">
+                            <small class="text-muted">Errores cometidos, proactividad, limpieza del trabajo.</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Metas/Tareas Cumplidas en el Mes (30%)</label>
+                            <input type="number" class="form-control form-control-lg" name="MetasCumplidas" id="txtMetas" min="0" max="50" value="10" required onkeyup="calcularTotal()" onchange="calcularTotal()">
+                            <small class="text-muted">Se considera óptimo alcanzar 10 metas o tareas principales por mes.</small>
+                        </div>
+
+                        <div class="card bg-light border-primary mb-4 shadow-sm">
+                            <div class="card-body text-center">
+                                <h4 class="text-muted mb-1">Calificación Final Proyectada</h4>
+                                <div class="display-3 fw-bold text-success" id="lblTotal">100.00</div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">Guardar Evaluación</button>
+                            <a asp-action="Detalles" asp-route-id="@ViewBag.IdEmpleado" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function calcularTotal() {
+            let puntualidad = parseFloat(document.getElementById('rngPuntualidad').value);
+            let calidad = parseFloat(document.getElementById('rngCalidad').value);
+            let metas = parseInt(document.getElementById('txtMetas').value) || 0;
+
+            document.getElementById('valPuntualidad').innerText = puntualidad + " / 100";
+            document.getElementById('valCalidad').innerText = calidad + " / 100";
+
+            let porcentajeMetas = (metas >= 10) ? 100 : (metas * 10);
+            let notaFinal = (puntualidad * 0.30) + (calidad * 0.40) + (porcentajeMetas * 0.30);
+
+            let lblTotal = document.getElementById('lblTotal');
+            lblTotal.innerText = notaFinal.toFixed(2);
+
+            if (notaFinal >= 80) {
+                lblTotal.className = "display-3 fw-bold text-success";
+            } else if (notaFinal >= 60) {
+                lblTotal.className = "display-3 fw-bold text-warning";
+            } else {
+                lblTotal.className = "display-3 fw-bold text-danger";
+            }
+        }
+    </script>
+}

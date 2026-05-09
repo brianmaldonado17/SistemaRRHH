@@ -1,0 +1,72 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Historial de Productividad";
+}
+
+<div class="container mt-4">
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Historial de Desempeño: <span class="text-primary">@ViewBag.NombreCompleto</span></h2>
+        <div>
+            <a asp-action="Detalles" asp-route-id="@ViewBag.IdEmpleado" class="btn btn-secondary shadow-sm ms-2">
+                <i class="bi bi-arrow-left me-1"></i> Regresar al Expediente
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0 text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mes Evaluado</th>
+                        <th>Puntualidad (30%)</th>
+                        <th>Calidad (40%)</th>
+                        <th>Metas (30%)</th>
+                        <th>Calificación Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle fw-bold">@item.MesAnio</td>
+                                <td class="align-middle">@item.Puntualidad / 100</td>
+                                <td class="align-middle">@item.CalidadTrabajo / 100</td>
+                                <td class="align-middle">@item.MetasCumplidas metas</td>
+                                <td class="align-middle">
+                                    @{
+                                        var claseColor = "bg-danger"; // Rojo por defecto
+                                        if (item.PuntuacionDesempeno >= 80) claseColor = "bg-success"; // Verde
+                                        else if (item.PuntuacionDesempeno >= 60) claseColor = "bg-warning text-dark"; // Amarillo
+                                    }
+                                    <span class="badge @claseColor fs-6 px-3 py-2 rounded-pill">
+                                        @item.PuntuacionDesempeno.ToString("N2")
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="py-4 text-muted">
+                                Este colaborador aún no tiene evaluaciones de desempeño registradas.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

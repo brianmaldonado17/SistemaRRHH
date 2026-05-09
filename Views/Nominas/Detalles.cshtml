@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SistemaRRHH.Models.DetalleNomina>
+
+@{
+    ViewData["Title"] = "Detalle de Nómina";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Detalle de la Nómina <span class="text-muted">#@ViewBag.IdNomina</span></h2>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver al Historial
+        </a>
+    </div>
+
+    <div class="card shadow border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Colaborador</th>
+                            <th class="text-center">Días</th>
+                            <th class="text-end text-success">Bonificación Ley</th>
+                            <th class="text-end text-danger">Desc. IGSS</th>
+                            <th class="text-end text-danger">ISR / Otras</th>
+                            <th class="text-end fw-bold bg-light">Líquido a Recibir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="align-middle">@item.NombreEmpleado</td>
+                                    <td class="align-middle text-center">@item.DiasTrabajados</td>
+                                    <td class="align-middle text-end text-success">+ Q @item.Bonificaciones.ToString("N2")</td>
+                                    <td class="align-middle text-end text-danger">- Q @item.DescuentosIgss.ToString("N2")</td>
+                                    <td class="align-middle text-end text-danger">- Q @item.OtrasDeducciones.ToString("N2")</td>
+                                    <td class="align-middle text-end fw-bold bg-light">
+                                        Q @item.TotalLiquido.ToString("N2")
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    No hay detalles registrados para esta nómina.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿@model SistemaRRHH.Models.Usuario
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-person-plus-fill me-2"></i> Crear Acceso al Sistema</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Crear" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Empleado</label>
+                            <select name="IdEmpleado" class="form-select" required>
+                                <option value="">-- Seleccione un Empleado --</option>
+                                @foreach (var col in ViewBag.Empleados)
+                                {
+                                    <option value="@col.IdEmpleado">@col.NombreCompleto</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre de Usuario (Username)</label>
+                            <input type="text" name="Username" class="form-control" autocomplete="off" placeholder="Ej. brian.maldonado" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Correo Electrónico</label>
+                            <input type="email" name="CorreoElectronico" class="form-control" autocomplete="off" placeholder="Ej. brian.maldonado@empresa.com" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Contraseña Temporal</label>
+                            <input type="password" name="Password" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Rol del Sistema</label>
+                            <select name="IdRol" class="form-select" required>
+                                <option value="">-- Asigne un Rol --</option>
+                                @foreach (var rol in ViewBag.Roles)
+                                {
+                                    <option value="@rol.IdRol">@rol.NombreRol</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save me-1"></i> Crear Usuario
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

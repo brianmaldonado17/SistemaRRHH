@@ -1,0 +1,61 @@
+﻿<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Cálculo de Prestaciones de Ley</h4>
+                </div>
+                <div class="card-body">
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger shadow-sm border-start border-4 border-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> <strong>Aviso:</strong> @ViewBag.Error
+                        </div>
+                    }
+
+                    <form asp-action="ProcesarCalculo" method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Colaborador</label>
+                            <select name="idEmpleado" class="form-select" required>
+                                <option value="">-- Seleccione un empleado --</option>
+                                @foreach (var emp in ViewBag.Empleados)
+                                {
+                                    <option value="@emp.IdEmpleado">@emp.NombreCompleto</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tipo de Prestación</label>
+                            <select name="tipoPrestacion" class="form-select" required>
+                                <option value="Bono 14">Bono 14</option>
+                                <option value="Aguinaldo">Aguinaldo</option>
+                                <option value="Vacaciones">Vacaciones</option>
+                                <option value="Indemnizacion">Indemnización</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Año de Aplicación</label>
+                            <select name="anioAplicacion" class="form-select" required>
+                                <option value="@DateTime.Now.Year">@DateTime.Now.Year (Actual)</option>
+                                <option value="@(DateTime.Now.Year - 1)">@(DateTime.Now.Year - 1) (Anterior)</option>
+                            </select>
+                            <small class="text-muted">El sistema construirá el período exacto de forma automática según la ley.</small>
+                        </div>
+
+                        <div class="alert alert-warning small">
+                            <i class="bi bi-info-circle"></i> El sistema utilizará la fecha de ingreso y el salario base actual para realizar el cálculo automático según la ley.
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('¿Confirmar el cálculo y registro de esta prestación?')">Procesar y Guardar Pago</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

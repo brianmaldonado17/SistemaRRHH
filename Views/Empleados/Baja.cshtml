@@ -1,0 +1,48 @@
+﻿@model SistemaRRHH.Models.Empleado
+
+@{
+    ViewData["Title"] = "Dar de Baja a Empleado";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar Baja de Colaborador</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        Está a punto de dar de baja a: <strong>@Model.Nombre @Model.Apellido</strong>.<br />
+                        Esta acción cambiará su estado a inactivo y registrará el movimiento en auditoría.
+                    </div>
+
+                    <form asp-action="Baja" method="post">
+                        <input type="hidden" name="IdEmpleado" value="@Model.IdEmpleado" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Motivo de Salida</label>
+                            <select name="Motivo" class="form-select" required>
+                                <option value="">-- Seleccione un Motivo --</option>
+                                <option value="Renuncia Voluntaria">Renuncia Voluntaria</option>
+                                <option value="Despido Justificado">Despido Justificado</option>
+                                <option value="Despido Injustificado">Despido Injustificado</option>
+                                <option value="Fin de Contrato">Fin de Contrato</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Observaciones / Detalles</label>
+                            <textarea name="Observaciones" class="form-control" rows="4" placeholder="Escriba aquí los detalles de la salida..." required></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está completamente seguro de procesar esta baja?')">Confirmar Baja</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar y Regresar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

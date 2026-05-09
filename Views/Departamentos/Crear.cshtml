@@ -1,0 +1,36 @@
+﻿@model SistemaRRHH.Models.Departamento
+
+@{
+    ViewData["Title"] = "Crear Departamento";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Registrar Departamento</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Crear" method="post">
+                        <div class="mb-3">
+                            <label asp-for="NombreDepartamento" class="form-label">Nombre del Departamento</label>
+                            <input asp-for="NombreDepartamento" class="form-control" placeholder="Ej. Recursos Humanos, IT, Ventas" autocomplete="off" />
+                            <span asp-validation-for="NombreDepartamento" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

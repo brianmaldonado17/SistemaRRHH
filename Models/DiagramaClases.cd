@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SistemaRRHH.Models.Ausencia">
+    <Position X="7" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAgAAAAACAgAAAAAAAAAAAAABAgAEAAAAg=</HashCode>
+      <FileName>Models\Ausencia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.Departamento">
+    <Position X="4.75" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Departamento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.Empleado">
+    <Position X="4.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgACAgAgAAgEAAAAgBAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Empleado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.Nomina">
+    <Position X="2.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIACAAgAAg=</HashCode>
+      <FileName>Models\Nomina.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.Prestacion">
+    <Position X="11.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQIAAAAgACAEAAAAgAABABAAAAAAAAAAAgAAAAg=</HashCode>
+      <FileName>Models\Prestacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.Puesto">
+    <Position X="9.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Puesto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.Rol">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAEAAAAAAg=</HashCode>
+      <FileName>Models\Rol.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.Usuario">
+    <Position X="2.75" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAYAAAAgAAAQAQAAAAAAAAAAAAACABAEAAAAAAg=</HashCode>
+      <FileName>Models\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SistemaRRHH.Models.DetalleNomina">
+    <Position X="8.75" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AGAAAAIAQAAAAAAABAEAAAQAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\DetalleNomina.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
